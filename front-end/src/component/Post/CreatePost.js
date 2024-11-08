@@ -3,6 +3,8 @@ import { Form, Button, Spinner } from 'react-bootstrap';
 import APIs, { authAPIs, endpoints } from '../Configs/APIs';
 import cookie from 'react-cookies';
 import { Link } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const CreatePost = () => {
     const [title, setTitle] = useState('');
@@ -12,7 +14,7 @@ const CreatePost = () => {
     const [user, setUser] = useState(null);
 
     const handleTitleChange = (e) => setTitle(e.target.value);
-    const handleContentChange = (e) => setContent(e.target.value);
+    const handleContentChange = (value) => setContent(value);
     const handleCoverImageChange = (e) => setCoverImage(e.target.files[0]);
 
     const fetchCurrentUser = async () => {
@@ -33,7 +35,7 @@ const CreatePost = () => {
         setLoading(true);
 
         const formData = new FormData();
-        formData.append('active', true)
+        formData.append('active', true);
         formData.append('title', title);
         formData.append('content', content);
         if (coverImage) formData.append('cover_image', coverImage);
@@ -88,13 +90,21 @@ const CreatePost = () => {
 
                     <Form.Group className="mb-3" controlId="formContent">
                         <Form.Label>Content</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={5}
+                        <ReactQuill
                             value={content}
                             onChange={handleContentChange}
-                            required
                             placeholder="Enter post content"
+                            modules={{
+                                toolbar: [
+                                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                    ['bold', 'italic', 'underline'],
+                                    [{ 'color': [] }, { 'background': [] }],
+                                    [{ 'align': [] }],
+                                    ['link', 'image'],
+                                    ['clean']
+                                ],
+                            }}
                         />
                     </Form.Group>
                 </div>
@@ -105,7 +115,7 @@ const CreatePost = () => {
                     </Button>
 
                     <Button variant="primary" id='create' type="submit" disabled={loading}>
-                        {loading ? <Spinner animation="border" size="sm" /> : 'Pushlis'}
+                        {loading ? <Spinner animation="border" size="sm" /> : 'Publish'}
                     </Button>
                 </div>
             </Form>

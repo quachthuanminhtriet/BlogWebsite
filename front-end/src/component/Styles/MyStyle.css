@@ -376,21 +376,21 @@ image {
     border-radius: 41px;
 }
 
-.about .contentimage .content{
+.about .contentimage .content {
     text-align: center;
 }
 
-.about .contentimage .content h1{
+.about .contentimage .content h1 {
     font-weight: bold;
     font-size: 48px;
 }
 
-.about .contentimage .content h3{
+.about .contentimage .content h3 {
     font-size: 30px;
 }
 
-.about .contentimage .content p{
-    color: #000000 ;
+.about .contentimage .content p {
+    color: #000000;
     font-size: 24px;
     text-align: left;
 }
@@ -434,7 +434,7 @@ image {
     margin: 0 20px;
 }
 
-.createblogs .formsubmit{
+.createblogs .formsubmit {
     border: #895129 1px solid;
     padding: 20px;
     border-radius: 5px;
@@ -446,13 +446,14 @@ image {
     text-align: left;
 }
 
-.createblogs .formsubmit input, .createblogs .formsubmit textarea {
+.createblogs .formsubmit input,
+.createblogs .formsubmit textarea {
     background-color: #EDE8D0;
     font-size: 24px;
 
 }
 
-.createblogs .formsubmit .submitbutton #cancel{
+.createblogs .formsubmit .submitbutton #cancel {
     background: none;
     border: none;
     border-radius: none;
@@ -460,11 +461,11 @@ image {
     margin: 20px;
 }
 
-.createblogs .formsubmit .submitbutton #cancel a{
+.createblogs .formsubmit .submitbutton #cancel a {
     color: #895129;
 }
 
-.createblogs .formsubmit .submitbutton #create{
+.createblogs .formsubmit .submitbutton #create {
     background: #895129;
     border: none;
     border-radius: none;
@@ -472,6 +473,244 @@ image {
     margin: 20px;
 }
 
-.createblogs .formsubmit .submitbutton #create a{
+.createblogs .formsubmit .submitbutton #create a {
     color: white;
+}
+
+/* Home */
+
+.home {
+    margin: 20px 0 20px 0;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+}
+
+.home .detailheader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.home .detailheader h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.home .detailheader::before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.home .detailheader::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.home .featured {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.home .featured h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.home .featured::before {
+    content: "";
+    flex: 0.1;
+    border-top: 2px dashed #895129;
+    margin: 0 20px;
+}
+
+.home .featured::after {
+    content: "";
+    flex: 0.2;
+    border-top: 2px dashed #895129;
+    margin: 0 20px;
+}
+
+.home .content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.home .content img {
+    width: 640px;
+    height: 800px;
+    border-radius: 10px;
+}
+
+.home .content .contentmotto {
+    color: #000;
+    font-size: 50px;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 640px;
+    height: 800px;
+}
+
+.home .content .contentmotto #name {
+    font-size: 20px;
+    align-self: flex-end;
+    text-align: left;
+    margin-right: 20px;
+}
+
+/* FEATURED POST */
+.home .featuredpost {
+    align-items: center;
+}
+
+.home .featuredpost .custom-card {
+    border: none;
+}
+
+.home .featuredpost #imgfeatured {
+    width: 640px;
+    height: 800px;
+    border-radius: 10px;
+}
+
+.home .featuredcard .card-image {
+    object-fit: cover;
+    border-radius: 5px;
+    width: 417.11px;
+    height: 489px;
+}
+
+.custom-card .card-image-container p {
+    color: #895129;
+    background: #EDE8D0;
+    padding: 0;
+    position: absolute;
+    top: -30px;
+    left: -50px;
+    font-size: 32px;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.custom-card .card-image-container {
+    position: relative;
+}
+
+.home .featuredpost .custom-card .title {
+    font-size: 30px;
+    color: #000;
+    font-weight: bold;
+}
+
+.home .featuredpost .custom-card .card-text {
+    font-size: 25px;
+    color: #000;
+}
+
+/* Recent Posts */
+
+.home .recent {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.home .recent h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.home .recent::before {
+    content: "";
+    flex: 1;
+    border-top: 1px solid #895129;
+    margin: 0 20px;
+}
+
+.home .recent::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid #895129;
+    margin: 0 20px;
+}
+
+.home .recentpost .postcard{
+    border: none;
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.home .recentpost .datetime{
+    font-size: 24px;
+}
+
+.home .recentpost img {
+    width: 718px;
+    height: 611px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.home .recentpost .custom-card{
+    margin-left: 50px;
+    color: #000;
+    width: 528px;
+    height: 611px;
+}
+
+.home .recentpost .custom-card *:not(:first-child){
+    margin-top: 20px;
+}
+
+
+.home .recentpost .custom-card .title {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.home .recentpost .custom-card .contentrecent {
+    font-size: 30px;
+    margin-bottom: 50px;
+    width: 100%;
+    text-align: left;
+}
+
+.home .recentpost .custom-card .btnblog {
+    float: none;
+    position: relative;
+}
+
+.home .recentpost .custom-card .btn {
+    background-color: #895129;
+    color: #EDE8D0;
+    font-size: 30px;
+    border: none;
+    border-radius: 10px;
+    float: right;
+
 }

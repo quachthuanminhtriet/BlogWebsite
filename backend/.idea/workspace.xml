@@ -5,16 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="856044a5-af8b-4098-90c6-564a25452cc8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blogweb/blog/perm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blogweb/blog/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/blogweb/blog/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Home/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Home/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Post/CreatePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Post/CreatePost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Post/DetailPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Post/DetailPost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Styles/MyStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Styles/MyStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +27,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -43,7 +41,9 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/CNMNM/BlogWebsite/backend&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
 }</component>
   <component name="RunManager">

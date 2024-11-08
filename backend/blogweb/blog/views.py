@@ -73,12 +73,10 @@ class BlogViewSet(viewsets.ViewSet, generics.ListAPIView, generics.CreateAPIView
         queryset = self.queryset
         action = self.request.query_params.get('action')
 
-        if action == 'latest':
+        if action == 'recent':
             queryset = queryset.order_by('-create_date')
-        elif action == 'hot':
-            queryset = queryset.order_by('-views')
-        elif action == 'highlighted':
-            queryset = queryset.filter(highlighted=True)
+        elif action == 'latest':
+            queryset = queryset.order_by('-create_date')[:1]
 
         return queryset
 

@@ -5,8 +5,8 @@ from django.utils.text import slugify
 
 
 class BaseModel(models.Model):
-    create_date = models.DateField(auto_now_add=True, null=True)
-    update_date = models.DateField(auto_now=True, null=True)
+    create_date = models.DateTimeField(auto_now_add=True, null=True)
+    update_date = models.DateTimeField(auto_now=True, null=True)
     active = models.BooleanField(default=True)
 
     class Meta:

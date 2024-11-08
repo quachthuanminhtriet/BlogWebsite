@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'cloudinary',
     'rest_framework',
     'drf_yasg',
-    'oauth2_provider',
     'corsheaders',
     'blog.apps.BlogConfig',
     'rest_framework_simplejwt',
