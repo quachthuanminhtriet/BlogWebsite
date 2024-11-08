@@ -1,0 +1,477 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+image {
+    width: 100%;
+}
+
+/* Header  */
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    background-color: #EDE8D0;
+    height: 173px;
+    font-family: 'Inter', sans-serif;
+}
+
+.header .mainname {
+    font-size: 40px;
+    color: #895129;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.header .bio {
+    font-size: 20px;
+    color: #895129;
+}
+
+.header .urlblog {
+    font-size: 20px;
+    color: #895129;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.header .urlblog li a {
+    margin: 20px;
+    text-decoration: none !important;
+    color: #4F4D46;
+}
+
+.header .urlblog li .activelink {
+    color: #895129;
+    font-weight: bold;
+}
+
+
+/* Footer */
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    background-color: #EDE8D0;
+    margin-top: auto;
+    padding-top: 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.footer .information .logolink img {
+    width: 40px;
+    margin-left: 20px !important;
+}
+
+.footer .information .name {
+    font-size: 64px;
+    color: #895129;
+}
+
+.footer .information .infor li {
+    list-style-type: none;
+    font-size: 20px;
+    color: #4F4D46;
+    text-align: left;
+}
+
+.footer .contact #text-1 {
+    font-size: 64px;
+    color: #895129;
+    font-weight: normal !important;
+}
+
+.footer .contact {
+    text-align: left;
+    color: #895129;
+}
+
+.footer .contact #text-2 {
+    font-size: 36px;
+    color: #4F4D46 !important;
+    font-weight: normal !important;
+}
+
+.footer .contact #text-1 {
+    font-size: 64px;
+    font-weight: normal !important;
+}
+
+.footer .contact .fullname {
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer .contact .submitform input {
+    border: none;
+    border-bottom: 2px solid #000000;
+    border-radius: 0;
+    padding: 8px 0;
+    background-color: #EDE8D0;
+    cursor: pointer;
+}
+
+.footer .contact .submitform input:focus {
+    box-shadow: none;
+    border-bottom: 2px solid #895129;
+}
+
+.footer .contact .submitform button {
+    float: right;
+    background: none;
+    border: #000000 1px solid;
+    border-radius: 0px;
+    font-size: 24px;
+    color: #895129;
+    padding: 12px 32px 12px 32px;
+}
+
+/* Login  */
+
+.login {
+    margin: 20px 0 20px 0;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+}
+
+.login .detailheader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.login .detailheader h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.login .detailheader::before {
+    content: "";
+    flex: 0.5;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.login .detailheader::after {
+    content: "";
+    flex: 1.5;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.login .loginform {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login .loginform img {
+    width: 540px;
+    height: 600px;
+    border-radius: 41px;
+}
+
+.login .loginform .loginsubmit .title {
+    text-align: center;
+    font-size: 30px;
+}
+
+.login .loginform .loginsubmit .title h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 48px !important;
+}
+
+.login .loginform .loginsubmit label,
+.login .loginform .loginsubmit div {
+    font-size: 30px;
+}
+
+.login .loginform .loginsubmit input {
+    border: none;
+    border-bottom: 2px #895129 solid;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 30px;
+}
+
+.login .loginform .loginsubmit button {
+    border: 2px #895129 solid;
+    border-radius: 5px;
+    font-size: 30px;
+    padding: 0 20px 0 20px;
+    background: none;
+    color: #895129;
+    margin-top: 20px;
+    float: right;
+}
+
+/* Register  */
+.register {
+    margin: 20px 0 20px 0;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+}
+
+.register .detailheader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.register .detailheader h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.register .detailheader::before {
+    content: "";
+    flex: 0.5;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.register .detailheader::after {
+    content: "";
+    flex: 1.5;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.register .registerform {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.register .registerform img {
+    width: 540px;
+    height: 600px;
+    border-radius: 41px;
+}
+
+.register .registerform .registersubmit .title {
+    text-align: center;
+    font-size: 30px;
+}
+
+.register .registerform .registersubmit .title h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 48px !important;
+}
+
+.register .registerform .registersubmit label,
+.register .registerform .registersubmit div {
+    font-size: 30px;
+}
+
+.register .registerform .registersubmit input {
+    border: none;
+    border-bottom: 2px #895129 solid;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 24px;
+}
+
+.register .registerform .registersubmit button {
+    border: 2px #895129 solid;
+    border-radius: 5px;
+    font-size: 30px;
+    padding: 0 20px 0 20px;
+    background: none;
+    color: #895129;
+    margin-top: 20px;
+    float: right;
+}
+
+.register .registerform .registersubmit .fullnameform {
+    display: flex;
+}
+
+.register .registerform .registersubmit .fullnameform .lastname {
+    margin-left: 20px;
+}
+
+/* About */
+.about {
+    margin: 20px 0 20px 0;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+}
+
+.about .detailheader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.about .detailheader h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.about .detailheader::before {
+    content: "";
+    flex: 0.5;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.about .detailheader::after {
+    content: "";
+    flex: 1.5;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.about .contentimage {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.about .contentimage .detailimage {
+    margin-right: 35px;
+}
+
+.about .contentimage img {
+    width: 600px;
+    height: auto;
+    border-radius: 41px;
+}
+
+.about .contentimage .content{
+    text-align: center;
+}
+
+.about .contentimage .content h1{
+    font-weight: bold;
+    font-size: 48px;
+}
+
+.about .contentimage .content h3{
+    font-size: 30px;
+}
+
+.about .contentimage .content p{
+    color: #000000 ;
+    font-size: 24px;
+    text-align: left;
+}
+
+/* CreateBlogs */
+
+.createblogs {
+    margin: 20px 0 20px 0;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+}
+
+.createblogs .detailheader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.createblogs .detailheader h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.createblogs .detailheader::before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.createblogs .detailheader::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #895129;
+    margin: 0 20px;
+}
+
+.createblogs .formsubmit{
+    border: #895129 1px solid;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 32px;
+    text-align: center;
+}
+
+.createblogs .formsubmit .formblog {
+    text-align: left;
+}
+
+.createblogs .formsubmit input, .createblogs .formsubmit textarea {
+    background-color: #EDE8D0;
+    font-size: 24px;
+
+}
+
+.createblogs .formsubmit .submitbutton #cancel{
+    background: none;
+    border: none;
+    border-radius: none;
+    font-size: 24px;
+    margin: 20px;
+}
+
+.createblogs .formsubmit .submitbutton #cancel a{
+    color: #895129;
+}
+
+.createblogs .formsubmit .submitbutton #create{
+    background: #895129;
+    border: none;
+    border-radius: none;
+    font-size: 24px;
+    margin: 20px;
+}
+
+.createblogs .formsubmit .submitbutton #create a{
+    color: white;
+}
