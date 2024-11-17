@@ -8,8 +8,9 @@ import { Container } from 'react-bootstrap';
 import "./component/Styles/MyStyle.css";
 import Register from './component/User/Register';
 import About from './component/Home/About';
-import CreatePost from './component/Post/CreatePost';
-import DetailPost from './component/Post/DetailPost';
+import CreateBlog from './component/Post/CreateBlog';
+import DetailBlog from './component/Post/DetailBlog';
+import AllBlog from './component/Home/AllBlog';
 
 function App() {
   return (
@@ -21,8 +22,9 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
-          <Route path="/createpost" element={<CreatePost />} />
-          <Route path="/blogs/:slug" element={<DetailPost />} />
+          <Route path="/createpost" element={<CreateBlog />} />
+          <Route path="/blogs/:slug" element={<DetailBlog />} />
+          <Route path="/blog" element={<AllBlog />} />
         </Routes>
       </Container>
       <Routes>

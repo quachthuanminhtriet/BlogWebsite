@@ -15,20 +15,20 @@ const Home = () => {
             setLoading(true);
             try {
                 const latestResponse = await APIs.get(endpoints['blogs'], {
-                    params: { action: 'latest' },
+                    params: { action: 'latest', page: 1 },
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                setLatestPosts(latestResponse.data);
+                setLatestPosts(latestResponse.data.results);
 
                 const recentResponse = await APIs.get(endpoints['blogs'], {
-                    params: { action: 'recent' },
+                    params: { action: 'recent' , page: 1 },
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                setRecentPost(recentResponse.data);
+                setRecentPost(recentResponse.data.results);
             } catch (error) {
                 console.error('Error fetching posts:', error);
             } finally {
@@ -124,23 +124,6 @@ const Home = () => {
                                 </div>
                             ))}
                         </div>
-
-                        // <Row className='recentpost'>
-                        //     {recentPost.slice(0, 3).map((post) => (
-                        //         <Col key={post.id} md={4} className='mb-3'>
-                        //             <Card className="custom-card">
-                        //                 <Card.Img variant="left" src={post.cover_image} />
-                        //                 <Card.Body>
-                        //                     <Card.Title>{post.title}</Card.Title>
-                        //                     {getPostPreviewContent(post.content)}
-                        //                     <Link to={`/blogs/${post.slug}`} className="btn btn-primary">
-                        //                         All Post
-                        //                     </Link>
-                        //                 </Card.Body>
-                        //             </Card>
-                        //         </Col>
-                        //     ))}
-                        // </Row>
                     )}
                 </>
             )}

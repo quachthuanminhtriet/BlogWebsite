@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from .models import User, Blog, Comment
+from .models import User, Blog, Comment, Like
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BlogSerializer(serializers.ModelSerializer):
+    likes_count = serializers.IntegerField(source='likes', read_only=True)
+    liked = serializers.BooleanField(read_only=True)
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -24,15 +26,23 @@ class BlogSerializer(serializers.ModelSerializer):
             rep['cover_image'] = None
         return rep
 
+    def get_liked(self, obj):
+        user = self.context.get('request').user
+        if user.is_authenticated:
+            return Like.objects.filter(user=user, blog=obj).exists()
+        return False
+
     class Meta:
         model = Blog
         fields = '__all__'
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    blog = BlogSerializer(read_only=True)
+    user_first_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
         fields = '__all__'
+
+    def get_user_first_name(self, obj):
+        return obj.user.first_name

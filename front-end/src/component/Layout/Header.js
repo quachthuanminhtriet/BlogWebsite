@@ -1,26 +1,49 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { authAPIs, endpoints } from '../Configs/APIs';
+import { useCookies } from 'react-cookie';
+import { Button } from 'react-bootstrap';
 
 const Header = () => {
     const [activeLink, setActiveLink] = useState('/');
     const contactRef = useRef(null);
     const location = useLocation();
-    const [userName, setUserName] = useState(null);
-
-    const fetchCurrentUser = async () => {
-        try {
-            const response = await authAPIs().get(endpoints['current-user']);
-
-            setUserName(response.data.first_name);
-        } catch (error) {
-            console.error('Error fetching current user:', error);
-        }
-    };
+    const [userName, setUserName] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [cookies, removeCookie] = useCookies(['access-token']);
 
     useEffect(() => {
-        fetchCurrentUser();
-    }, []);
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await authAPIs().get(endpoints['current-user']);
+                setUserName(response.data.first_name);
+            } catch (error) {
+                console.error('Error fetching current user:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const checkAuthStatus = () => {
+            const token = cookies['access-token'];
+            return token ? true : false;
+        };
+
+        if (checkAuthStatus()) {
+            setIsLoggedIn(true);
+            fetchCurrentUser();
+        } else {
+            setIsLoggedIn(false);
+            setLoading(false);
+        }
+    }, [cookies, userName]);
+
+    const handleLogout = () => {
+        removeCookie('access-token');
+        setIsLoggedIn(false);
+    };
+
 
     const handleLinkClick = (link) => {
         setActiveLink(link);
@@ -79,13 +102,18 @@ const Header = () => {
                         </Link>
                     </li>}
                 <li>
-                    {userName ? (
-                        <span className="user-name">{`Hello, ${userName}`}</span>
+                    {loading ? (
+                        <div>Loading...</div>
+                    ) : isLoggedIn ? (
+                        <div className='logout'>
+                            <div className='username'>Welcome, {userName}</div>
+                            <Button onClick={handleLogout} className='logout'>Logout</Button>
+                        </div>
                     ) : (
                         <Link
                             to="/login"
                             onClick={() => handleLinkClick('/login')}
-                            className={activeLink === '/login' && '/register' ? 'activelink' : ''}
+                            className={activeLink === '/login' || activeLink === '/register' ? 'activelink' : ''} // Fixed active link check
                         >
                             Login
                         </Link>

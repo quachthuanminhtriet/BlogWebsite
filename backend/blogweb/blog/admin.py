@@ -17,10 +17,10 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'author', 'create_date')
+    list_display = ('id', 'title', 'views', 'author', 'create_date')
     search_fields = ('title',)
     list_filter = ('author', 'create_date')
-    ordering = ('id', 'title')
+    ordering = ('id', 'title', 'views')
 
 
 # Register your models here.

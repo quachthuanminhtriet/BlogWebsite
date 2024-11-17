@@ -29,7 +29,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-
 class Blog(BaseModel):
     title = models.CharField(max_length=255)
     content = models.TextField(null=True, blank=True)
@@ -38,7 +37,7 @@ class Blog(BaseModel):
     slug = models.SlugField(null=True, blank=True, unique=True)
     highlighted = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
-    like = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = 'Bài Viết'
@@ -64,3 +63,15 @@ class Comment(BaseModel):
 
     def __str__(self):
         return f'Comment by {self.user.username} on {self.blog.title}'
+
+
+class Like(BaseModel):
+    user = models.ForeignKey(User, related_name='like', on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, related_name='like', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'blog')  # Đảm bảo mỗi người dùng chỉ like một lần
+        verbose_name_plural = 'Lượt Thích'
+
+    def __str__(self):
+        return f"{self.user.username} liked {self.blog.title}"
