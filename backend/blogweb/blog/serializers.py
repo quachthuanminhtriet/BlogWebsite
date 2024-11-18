@@ -26,12 +26,6 @@ class BlogSerializer(serializers.ModelSerializer):
             rep['cover_image'] = None
         return rep
 
-    def get_liked(self, obj):
-        user = self.context.get('request').user
-        if user.is_authenticated:
-            return Like.objects.filter(user=user, blog=obj).exists()
-        return False
-
     class Meta:
         model = Blog
         fields = '__all__'

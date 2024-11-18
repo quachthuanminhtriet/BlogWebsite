@@ -20,7 +20,6 @@ const AllBlog = () => {
         try {
             const response = await APIs.get(endpoints['blogs'], {
                 params: { page: currentPage, action: 'recent' },
-                headers: { Authorization: `Bearer ${cookies['access-token']}` }
             });
 
             if (response.data && response.data.results) {
@@ -97,7 +96,12 @@ const AllBlog = () => {
         }
     };
 
-    const toggleLike = async (blogId, liked) => {
+    const toggleLike = async (blogId) => {
+        if (!isLoggedIn) {
+            alert("You must be logged in to like a post.");
+            return;
+        }
+
         try {
             const response = await APIs.post(endpoints['toggle-like'](blogId), {}, {
                 headers: { Authorization: `Bearer ${cookies['access-token']}` }

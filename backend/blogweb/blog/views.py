@@ -90,6 +90,9 @@ class BlogViewSet(viewsets.ViewSet, generics.ListAPIView, generics.CreateAPIView
         blog = self.get_object()  # Lấy bài viết từ ID
         user = request.user  # Người dùng hiện tại
 
+        if not user.is_authenticated:
+            return Response({'error': 'Authentication required to like a post'}, status=status.HTTP_401_UNAUTHORIZED)
+
         # Kiểm tra nếu đã tồn tại like từ người dùng này cho bài viết
         like = Like.objects.filter(user=user, blog=blog).first()
 

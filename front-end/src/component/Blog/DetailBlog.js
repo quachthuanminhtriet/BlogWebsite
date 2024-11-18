@@ -35,8 +35,6 @@ const DetailBlog = () => {
         const res = await APIs.get(`${endpoints['blogs']}${slug}/increment-views/`);
         setBlog(res.data);
         setBlogId(res.data.id);
-        console.log(blogId);
-
       } catch (error) {
         console.error('Error fetching blog:', error);
       } finally {
@@ -60,7 +58,7 @@ const DetailBlog = () => {
 
     fetchBlog();
     fetchComments();
-  }, [slug, blogId]);
+  }, [slug]);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -68,8 +66,16 @@ const DetailBlog = () => {
 
 
   const handleCommentSubmit = async () => {
+    //check login
+    if (!user) {
+      alert("You must be logged in to comment.");
+      return;
+    }
+
     if (!newComment.trim()) return;
+    const scrollPosition = window.scrollY;
     setLoading(true);
+
     try {
       const res = await APIs.post(endpoints['comments'], {
         user: user.id,
@@ -78,6 +84,7 @@ const DetailBlog = () => {
       });
       setComments([res.data, ...comments]);
       setNewComment('');
+      window.scrollTo(0, scrollPosition);
     } catch (error) {
       console.error('Error posting comment:', error);
     } finally {
@@ -92,6 +99,11 @@ const DetailBlog = () => {
   if (!blog) {
     return <div>Blog not found.</div>;
   }
+  
+  const handleCancel = () => {
+    setNewComment('');
+  };
+  
 
   // Sanitize and display content
   const sanitizedContent = DOMPurify.sanitize(blog.content);
@@ -147,7 +159,9 @@ const DetailBlog = () => {
             onChange={handleCommentChange}
           />
           <div className="button-comment">
-            <Button id="cancel">Cancel</Button>
+            <Button id="cancel" onClick={handleCancel}>
+              Cancel
+            </Button>
             <Button id="add" onClick={handleCommentSubmit}>
               Publish
             </Button>

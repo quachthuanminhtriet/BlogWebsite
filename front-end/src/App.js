@@ -8,8 +8,8 @@ import { Container } from 'react-bootstrap';
 import "./component/Styles/MyStyle.css";
 import Register from './component/User/Register';
 import About from './component/Home/About';
-import CreateBlog from './component/Post/CreateBlog';
-import DetailBlog from './component/Post/DetailBlog';
+import CreateBlog from './component/Blog/CreateBlog';
+import DetailBlog from './component/Blog/DetailBlog';
 import AllBlog from './component/Home/AllBlog';
 
 function App() {

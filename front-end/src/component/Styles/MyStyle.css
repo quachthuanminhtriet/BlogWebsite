@@ -411,10 +411,10 @@ image {
     text-align: left;
 }
 
-/* CreateBlogs */
+/* Create Blogs */
 
 .createblogs {
-    margin: 20px 0 20px 0;
+    margin: 350px 0 20px 0;
     font-family: 'Ibarra Real Nova', serif;
     color: #895129;
 }
@@ -423,6 +423,21 @@ image {
     display: flex;
     align-items: center;
     margin-bottom: 50px;
+}
+
+.createblogs .bgimg {
+    width: 900px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.createblogs .bgimg #bgimg{
+    width: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: -500px;
+    left: 0;
+    z-index: -1; 
 }
 
 .createblogs .detailheader h1 {
@@ -436,7 +451,7 @@ image {
 
 .createblogs .detailheader::before {
     content: "";
-    flex: 1;
+    flex: 0.2;
     height: 1px;
     background-color: #895129;
     margin: 0 20px;
@@ -444,7 +459,7 @@ image {
 
 .createblogs .detailheader::after {
     content: "";
-    flex: 1;
+    flex: 1.8;
     height: 1px;
     background-color: #895129;
     margin: 0 20px;
@@ -456,6 +471,7 @@ image {
     border-radius: 5px;
     font-size: 32px;
     text-align: center;
+    background-color: white;
 }
 
 .createblogs .formsubmit .formblog {
@@ -469,12 +485,25 @@ image {
 
 }
 
+.createblogs .formsubmit .submitbutton{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+
+.createblogs .formsubmit .submitbutton .space{
+    border: none;
+    background: none;
+}
+
 .createblogs .formsubmit .submitbutton #cancel {
     background: none;
     border: none;
     border-radius: none;
     font-size: 24px;
     margin: 20px;
+
 }
 
 .createblogs .formsubmit .submitbutton #cancel a {
@@ -491,6 +520,15 @@ image {
 
 .createblogs .formsubmit .submitbutton #create a {
     color: white;
+}
+
+.createblogs .formsubmit #reset{
+    background: none;
+    border: none;
+}
+
+.createblogs .formsubmit #reset img{
+    width: 50px;
 }
 
 /* Home */

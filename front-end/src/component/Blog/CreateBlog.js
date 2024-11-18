@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button, Spinner } from 'react-bootstrap';
+import { Form, Button, Spinner, Image } from 'react-bootstrap';
 import APIs, { authAPIs, endpoints } from '../Configs/APIs';
 import cookie from 'react-cookies';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,8 @@ const CreatePost = () => {
     const [coverImage, setCoverImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(null);
+    const urlImg = 'https://s3-alpha-sig.figma.com/img/ff1e/410a/6c87ad6366e939d5edeba6f79301c5f4?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=COgi~80OrGodfvU4AH8bUHMKnoU2XdgVifTStdRcSoQpWz97~0tcTlfrTAO4-GUZaNJZ8WkHZ5ySAYoAVeBVFU2h7XNx4lZv3FhJA04R2u4ZS31EoawuszDZP9RC6KLsvKHOwyGlgpHE9HSdogKjQ~6sPk68r7cDOgqgU7mjSZEm24T8OlolOXLDWABTldt1I1ur-nL2AjhBW9gAnYZptvuydgZGdbdpOYkq5htQ2akW1l-N-NeGt8siXrJvw1BaCWAiQqw8K7Sfqsc8h78Q0sVVrjyYRw9SpEFiCVzx-LWhE5uc44~May0dNtuPLe5DTS0BcP1GHXBemCtbwYjzVw__';
+    const urlReset = 'https://s3-alpha-sig.figma.com/img/d57f/3946/154094c258547801cec267b5a54a2bc3?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=F5MlAcZkBTB~m3cgjqfJJ7QLElbhEnanAx47N073dBJnTBcy5OpBRGKvLTh2sMqeFq0ZRC8Gp7NdNzduIQ2TbrxRZruykQXS0SLaYGliVAlFGxubB9rakb-n--JZOm52Sma0cfwqpHYtjPRLqFHbyJpO4fU6fBIU2Xbg7Bv6z7Aei3Url-qX4k0zRNhGd70EDaH70vq1s1Nx81-BO7GWJ-r3EFqPcvlPQxMYXFfbcHvhI2uD-O-L~~oyfhz0VH2MRGATNyY4LeXPvtPLdyV1itWdgOPz-SGDQtgBeWh-3TxhwvyNwBsBEQsxsd~BMvZVR2k-YqCQMp1b-8A1-VoEXQ__';
 
     const handleTitleChange = (e) => setTitle(e.target.value);
     const handleContentChange = (value) => setContent(value);
@@ -60,9 +62,18 @@ const CreatePost = () => {
         }
     };
 
+    const handleReset = () => {
+        setTitle('');
+        setContent('');
+        setCoverImage(null);
+    };
+
     return (
         <div className='createblogs'>
-            <div className='detailheader'>
+            <div className='bgimg'>
+                <Image src={urlImg} id='bgimg' />
+            </div>
+            <div className="detailheader">
                 <h1>ADD-POST</h1>
             </div>
 
@@ -84,7 +95,7 @@ const CreatePost = () => {
                             value={title}
                             onChange={handleTitleChange}
                             required
-                            placeholder="Enter post title"
+                            placeholder="Enter blog title...."
                         />
                     </Form.Group>
 
@@ -97,7 +108,7 @@ const CreatePost = () => {
                             modules={{
                                 toolbar: [
                                     [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                                     ['bold', 'italic', 'underline'],
                                     [{ 'color': [] }, { 'background': [] }],
                                     [{ 'align': [] }],
@@ -110,13 +121,22 @@ const CreatePost = () => {
                 </div>
 
                 <div className='submitbutton'>
-                    <Button id='cancel'>
-                        <Link to="/">Cancel</Link>
-                    </Button>
+                    <div className='space'></div>
+                    <div className='submit'>
+                        <Button id='cancel'>
+                            <Link to="/">Cancel</Link>
+                        </Button>
 
-                    <Button variant="primary" id='create' type="submit" disabled={loading}>
-                        {loading ? <Spinner animation="border" size="sm" /> : 'Publish'}
-                    </Button>
+                        <Button variant="primary" id='create' type="submit" disabled={loading}>
+                            {loading ? <Spinner animation="border" size="sm" /> : 'Publish'}
+                        </Button>
+                    </div>
+
+                    <div className='reset'>
+                        <Button id='reset' onClick={handleReset}>
+                            <Image src={urlReset} />
+                        </Button>
+                    </div>
                 </div>
             </Form>
         </div>
