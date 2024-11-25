@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Button, Spinner, Image } from 'react-bootstrap';
-import APIs, { authAPIs, endpoints } from '../Configs/APIs';
-import cookie from 'react-cookies';
-import { Link } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+    import React, { useEffect, useState } from 'react';
+    import { Form, Button, Spinner, Image } from 'react-bootstrap';
+    import APIs, { authAPIs, endpoints } from '../Configs/APIs';
+    import cookie from 'react-cookies';
+    import { Link } from 'react-router-dom';
+    import ReactQuill from 'react-quill';
+    import 'react-quill/dist/quill.snow.css';
 
 const CreatePost = () => {
     const [title, setTitle] = useState('');
