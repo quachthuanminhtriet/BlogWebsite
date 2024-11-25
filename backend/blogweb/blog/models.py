@@ -81,6 +81,7 @@ class Like(BaseModel):
 class Notification(BaseModel):
     user = models.ForeignKey(User, related_name='notifications', on_delete=models.CASCADE)
     message = models.CharField(max_length=255)
+    urlImage = models.CharField(max_length=255, blank=True, null=True)
     is_read = models.BooleanField(default=False)
     notification_type = models.CharField(max_length=50, null=True, blank=True)
 

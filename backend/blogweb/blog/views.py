@@ -1,4 +1,6 @@
 import time
+from pydoc import pager
+
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
@@ -9,7 +11,8 @@ from rest_framework.response import Response
 from rest_framework import viewsets, generics, permissions
 from . import serializers
 from .models import User, Blog, Comment, Like, Notification
-from .page import BlogPagination
+from .page import BlogPagination, NotificationPagination
+from .serializers import UserSerializer
 
 
 # User ViewSet
@@ -18,7 +21,7 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIVi
     serializer_class = serializers.UserSerializer
 
     def get_permissions(self):
-        if self.action in ['get_current_user', 'change_password',
+        if self.action in ['get_current_user', 'update-info',
                            'notifications', 'unread-notifications',
                            'mark-all-notifications-read']:
             return [permissions.IsAuthenticated()]
@@ -35,23 +38,37 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIVi
             user.save()
         return Response(serializers.UserSerializer(user).data)
 
-    @action(methods=['patch'], url_path='change-password', detail=True)
-    def change_password(self, request, pk=None):
+    @action(methods=['patch'], url_path='update-info', detail=True)
+    def update_user_info(self, request, pk=None):
+        # Check if the logged-in user is trying to edit their own information
         if str(request.user.id) != pk:
-            return Response({"error": "Bạn không có quyền thay đổi mật khẩu của người khác."},
+            return Response({"error": "Bạn không có quyền thay đổi thông tin của người khác."},
                             status=status.HTTP_403_FORBIDDEN)
 
         user = request.user
-        current_password = request.data.get('current_password')
-        new_password = request.data.get('new_password')
+        # Get the data from the request
+        email = request.data.get('email')
+        birth_day = request.data.get('birthDay')
+        nationality = request.data.get('nationality')
 
-        if not user.check_password(current_password):
-            return Response({"error": "Mật khẩu hiện tại không chính xác."}, status=status.HTTP_400_BAD_REQUEST)
+        # Prepare the updated data
+        updated_data = {}
+        if email:
+            updated_data['email'] = email
+        if birth_day:
+            updated_data['birthDay'] = birth_day
+        if nationality:
+            updated_data['nationality'] = nationality
 
-        user.password = make_password(new_password)
-        user.save()
+        # If there is data to update, apply it
+        if updated_data:
+            serializer = serializers.UserSerializer(user, data=updated_data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"message": "Thông tin đã được cập nhật thành công."}, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({"message": "Mật khẩu đã được thay đổi thành công."}, status=status.HTTP_200_OK)
+        return Response({"error": "Không có thông tin để cập nhật."}, status=status.HTTP_400_BAD_REQUEST)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -60,15 +77,19 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIVi
             return Response(serializers.UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    #Đưa ra danh sách thông báo
-    @action(detail=False, methods=['get'], url_path='notifications', permission_classes=[permissions.IsAuthenticated])
+    @action(detail=False, methods=['get'], url_path='notifications',
+            permission_classes=[permissions.IsAuthenticated])
     def get_notifications(self, request):
         user = request.user
-        notifications = user.notifications.all().order_by('-create_date')  # Lấy thông báo của người dùng
-        page = self.paginate_queryset(notifications)
+        notifications = user.notifications.all().order_by('-create_date')
+
+        paginator = NotificationPagination()
+        page = paginator.paginate_queryset(notifications, request)
+
         if page is not None:
             serializer = serializers.NotificationSerializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+            return paginator.get_paginated_response(serializer.data)
+
         serializer = serializers.NotificationSerializer(notifications, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -148,7 +169,8 @@ class BlogViewSet(viewsets.ViewSet, generics.ListAPIView, generics.CreateAPIView
             # if user.role != 'blogger':
             Notification.objects.create(
                 user=blog.author,  # Chủ bài viết
-                message=f"{user.username} đã thích bài viết của bạn: '{blog.title}'",
+                message=f"{user.first_name} đã thích bài viết '{blog.title}' của bạn",
+                urlImage=blog.cover_image.url,
                 notification_type="like"
             )
 
@@ -171,7 +193,7 @@ class CommentViewSet(viewsets.ViewSet, generics.ListAPIView, generics.CreateAPIV
         # if user.role != 'blogger':
         Notification.objects.create(
             user=comment.blog.author,  # Chủ bài viết
-            message=f"{request.user.username} đã bình luận trên bài viết của bạn: '{comment.blog.title}'",
+            message=f"{request.user.first_name} đã bình luận bài viết '{comment.blog.title}' của bạn",
             notification_type="comment"
         )
 

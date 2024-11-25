@@ -429,6 +429,47 @@ image {
     text-align: left;
 }
 
+.about .profile {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.about .profile h1 {
+    text-align: center;
+}
+
+.about .profile table {
+    font-size: 24px;
+    color: #4F4D46;
+    width: 500px;
+    padding: 0;
+    margin: 0;
+}
+
+.about .profile table tr td {
+    padding-top: 30px;
+}
+
+.about .profile table tr td:last-child {
+    text-align: right;
+}
+
+.about .profile .edit {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 20px;
+    background-color: #895129;
+    color: #EDE8D0;
+    font-size: 24px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+
+
 /* Create Blogs */
 
 .createblogs {
@@ -1062,4 +1103,89 @@ image {
 
 .blog .comments .comment .datetime {
     font-size: 16px;
+}
+
+/* Notification */
+
+.notification .detailheader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.notification .detailheader h1 {
+    border: #895129 solid 1px;
+    padding: 0px 20px;
+    font-family: 'Ibarra Real Nova', serif;
+    color: #895129;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.notification .detailheader::before {
+    content: "";
+    flex: 0.5;
+    border-top: 2px solid #895129;
+    margin: 0 20px;
+}
+
+.notification .detailheader::after {
+    content: "";
+    flex: 1.3;
+    border-top: 2px solid #895129;
+    margin: 0 20px;
+}
+
+.notification .pagination {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.notification .pagination button {
+    background: #895129;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.notification .pagination button:disabled {
+    background: #d3d3d3;
+    cursor: not-allowed;
+    color: #000;
+}
+
+.notification .pagination button:hover:enabled {
+    background: #0056b3;
+}
+
+.notification_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+}
+
+.notification_table th{
+    color: white;
+    font-size: 24px;
+}
+
+.notification_table th, .notification_table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #895129;
+}
+
+.notification_table th {
+    background-color: #895129;
+}
+
+.notification_table #img{
+    text-align: center;
 }

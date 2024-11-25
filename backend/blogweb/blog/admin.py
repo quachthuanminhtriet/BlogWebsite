@@ -3,7 +3,7 @@ from .models import Blog, User, Comment, Notification
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'email', 'is_active')
+    list_display = ('id', 'username', 'email', 'birthday', 'is_active')
     search_fields = ('username', 'email')
     list_filter = ('is_active',)
     ordering = ('id',)
