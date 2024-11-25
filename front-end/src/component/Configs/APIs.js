@@ -1,7 +1,8 @@
 import axios from "axios"
 import cookie from "react-cookies"
 
-const BASE_URL = 'http://127.0.0.1:8000/'
+const BASE_URL = 'http://127.0.0.1:8000/';
+const WS_BASE_URL = 'ws://127.0.0.1:8000/ws/'; 
 
 export const endpoints = {
     'blogs': '/blogs/',
@@ -13,9 +14,12 @@ export const endpoints = {
     'register': '/users/',
     'createblogs': '/blogs/',
     'toggle-like': (id) => `/blogs/${id}/toggle-like/`,
+    'notifications': '/api/notifications/',
 }
 
 export const authAPIs = () => {
+    const token = cookie.load('access-token');
+    console.log('Token hiện tại:', token);
     return axios.create({
         baseURL: BASE_URL,
         headers: {
@@ -27,3 +31,5 @@ export const authAPIs = () => {
 export default axios.create({
     baseURL: BASE_URL
 });
+
+export const WS_URL = WS_BASE_URL;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import APIs, { authAPIs, endpoints } from '../Configs/APIs';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { Card, Row, Col, Button } from 'react-bootstrap';
 import { FaRegCommentDots, FaRegHeart } from 'react-icons/fa';
@@ -14,6 +14,7 @@ const AllBlog = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [cookies] = useCookies(['access-token']);
     const [userName, setUserName] = useState('');
+    const navigate = useNavigate();
 
     const fetchBlogs = useCallback(async () => {
         setLoading(true);
@@ -35,7 +36,7 @@ const AllBlog = () => {
         } finally {
             setLoading(false);
         }
-    }, [currentPage, cookies]);
+    }, [currentPage]);
 
     useEffect(() => {
         fetchBlogs();
@@ -57,9 +58,7 @@ const AllBlog = () => {
         const fetchCurrentUser = async () => {
             setLoading(true);
             try {
-                const res = await authAPIs().get(endpoints['current-user'], {
-                    headers: { Authorization: `Bearer ${cookies['access-token']}` }
-                });
+                const res = await authAPIs().get(endpoints['current-user']);
                 setUserName(res.data.role);
                 setIsLoggedIn(true);
             } catch (error) {
@@ -98,6 +97,7 @@ const AllBlog = () => {
 
     const toggleLike = async (blogId) => {
         if (!isLoggedIn) {
+            navigate('/login', { state: { from: window.location.pathname } });
             alert("You must be logged in to like a post.");
             return;
         }

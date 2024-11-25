@@ -1,17 +1,19 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { authAPIs, endpoints } from '../Configs/APIs';
 import { useCookies } from 'react-cookie';
 import { Button } from 'react-bootstrap';
+import { FaRegBell } from 'react-icons/fa';
 
 const Header = () => {
     const [activeLink, setActiveLink] = useState('/');
-    const contactRef = useRef(null);
     const location = useLocation();
     const [userName, setUserName] = useState('');
     const [loading, setLoading] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [unreadCount, setUnreadCount] = useState(0);
     const [cookies, removeCookie] = useCookies(['access-token']);
+    const [notification, setNotifications] = useState('');
 
     useEffect(() => {
         const fetchCurrentUser = async () => {
@@ -30,24 +32,61 @@ const Header = () => {
             return token ? true : false;
         };
 
+        const fetchUnreadNotifications = async () => {
+            try {
+                const token = cookies['access-token'];
+                const response = await authAPIs().get(`${endpoints['users']}unread-notifications/`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setUnreadCount(response.data.unread_count);
+            } catch (error) {
+                console.error('Error fetching unread notifications:', error);
+            }
+        };
+
         if (checkAuthStatus()) {
             setIsLoggedIn(true);
             fetchCurrentUser();
+            fetchUnreadNotifications();
+
+            const token = cookies['access-token'];
+            const eventSource = new EventSource(`http://127.0.0.1:8000/sse/notifications/?token=${token}`);
+
+            eventSource.onmessage = function (event) {
+                setNotifications(prevNotifications => [...prevNotifications, event.data]);
+                setUnreadCount(prevCount => prevCount + 1);
+            };
+
+            eventSource.onerror = function (event) {
+                console.error('EventSource failed:', event);
+                eventSource.close();
+            };
+
+            return () => {
+                eventSource.close();
+            };
         } else {
             setIsLoggedIn(false);
             setLoading(false);
         }
-    }, [cookies, userName]);
+    }, [cookies]);
 
-    const handleLogout = () => {
-        removeCookie('access-token');
-        setIsLoggedIn(false);
+    const handleLogout = async () => {
+        try {
+            removeCookie('access-token');
+            sessionStorage.removeItem('access-token');
+            setUserName('');
+            setIsLoggedIn(false);
+            console.log('Đăng xuất thành công.');
+        } catch (error) {
+            console.error('Lỗi khi đăng xuất:', error);
+        }
     };
-
 
     const handleLinkClick = (link) => {
         setActiveLink(link);
-
         if (link === '/contact') {
             const footerElement = document.getElementById('footer-contact');
             if (footerElement) {
@@ -113,13 +152,27 @@ const Header = () => {
                         <Link
                             to="/login"
                             onClick={() => handleLinkClick('/login')}
-                            className={activeLink === '/login' || activeLink === '/register' ? 'activelink' : ''} // Fixed active link check
+                            className={activeLink === '/login' || activeLink === '/register' ? 'activelink' : ''}
                         >
                             Login
                         </Link>
                     )}
                 </li>
-                <div ref={contactRef} className="contact-section"></div>
+                <li>
+                    <div className='notification '>
+                        <Link to="/notification"
+                            onClick={() => {
+                                handleLinkClick('/notification');
+                                setUnreadCount(0); // Reset unread count
+                            }}
+                            className={activeLink === '/notification' ? 'activelink' : ''}>
+                            <FaRegBell className='icon'/>
+                            {unreadCount > 0 && (
+                                <span className="notification-count">{unreadCount}</span>
+                            )}
+                        </Link>
+                    </div>
+                </li>
             </ul>
         </div>
     );

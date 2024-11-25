@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Image, Alert } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cookie from 'react-cookies';
 import APIs, { endpoints } from '../Configs/APIs';
 
@@ -10,9 +10,11 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const urlImg = "https://s3-alpha-sig.figma.com/img/0f30/b72e/7049e3ec6fc322f9eef4ef959fd24ca8?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=MhW1oUNv1RPgdAenpWEiPeY0XrBj2TPrgKQzm7ZrkVyuLUv0mf0xNsb3C76aYdxsA1Mts~6ZxorcfDJ4bZ~yqb2HKAH3d2yjnnpBqAvpRibzQ2MOfBMyq0hPzg8NJw72nJHu4A3ZlSnPOia3wB~IKdykV7qla7FqevY4VnHmnqN4a5q5oANGjZOpub4FgeXhgoYnuqUeHHn4JlCoEhZYPooeIaeXuMijH9YQMXcNM2mWPAkxkK8nS-WSyYUooqblYanKp9Qxu~JTZBsJvQHiX9U6NVNUX-YRS~1puDXodi-Jt~GPXUWLbL5Lz-91X54XtwZ5X8xKiOvjD~nro56hWA__";
 
+    const previousPage = location.state?.from || "/";
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -25,9 +27,8 @@ const Login = () => {
 
         try {
             const response = await APIs.post(endpoints['login'], loginData);
-            cookie.save('access-token', response.data.access, { path: '/' });
-            navigate('/');
-            window.location.reload();
+            cookie.save('access-token', response.data.access);
+            navigate(previousPage, { replace: true });
         } catch (error) {
             setError('Invalid credentials. Please try again.');
             setLoading(false);

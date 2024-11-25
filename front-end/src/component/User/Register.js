@@ -7,6 +7,8 @@ import APIs, { endpoints } from '../Configs/APIs';
 const Register = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [nationality, setNationality] = useState('');
+    const [birthDay, setBirthDay] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -26,6 +28,8 @@ const Register = () => {
             email: email,
             username: username,
             password: password,
+            birthday: birthDay,
+            nationality: nationality,
             role: "viewer",
         };
 
@@ -102,6 +106,28 @@ const Register = () => {
                                 />
                             </Form.Group>
                         </div>
+
+                        <Form.Group className="mb-3" controlId="formEmail">
+                            <Form.Label>Birthday</Form.Label>
+                            <Form.Control
+                                type="date"
+                                placeholder="Enter Birthday"
+                                value={birthDay}
+                                onChange={(e) => setBirthDay(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formEmail">
+                            <Form.Label>Nationality</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter Nationality"
+                                value={nationality}
+                                onChange={(e) => setNationality(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formEmail">
                             <Form.Label>Email</Form.Label>

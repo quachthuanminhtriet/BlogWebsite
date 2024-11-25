@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',  # Cho phép chỉ người dùng đã đăng nhập
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'blog.apps.BlogConfig',
     'rest_framework_simplejwt',
+    'channels',
 ]
 
 AUTH_USER_MODEL = 'blog.User'
@@ -163,6 +165,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'blogweb.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [
+                "rediss://default:AXQ8AAIjcDFiNzU2NTU5OGM1NGY0YzRkYTk0NDhjOTE2ZjRhNDc3MXAxMA@concise-starfish-29756.upstash.io:6379",
+            ],
+        },
+    },
+}
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'triet123az@gmail.com'

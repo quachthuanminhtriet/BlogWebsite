@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Blog, User, Comment
+from .models import Blog, User, Comment, Notification
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -17,10 +17,17 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'views', 'author', 'create_date')
+    list_display = ('id', 'title', 'views', 'likes', 'author', 'create_date')
     search_fields = ('title',)
-    list_filter = ('author', 'create_date')
+    list_filter = ('author', 'create_date', 'views', 'likes')
     ordering = ('id', 'title', 'views')
+
+
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('notification_type', 'user', 'message')
+    search_fields = ('notification_type',)
+    list_filter = ('notification_type', 'create_date')
+    ordering = ('id', 'user', 'message')
 
 
 # Register your models here.
@@ -35,3 +42,4 @@ admin_site = BlogAdminSite(name='ShopAppAdmin')
 admin_site.register(User, UserAdmin)
 admin_site.register(Blog, BlogAdmin)
 admin_site.register(Comment, CommentAdmin)
+admin_site.register(Notification, NotificationAdmin)

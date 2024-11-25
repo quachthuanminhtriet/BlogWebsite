@@ -61,7 +61,7 @@ image {
 
 .header .logout {
     font-size: 20px;
-    color: #895129;
+    color: #4F4D46;
     list-style-type: none;
     display: flex;
     justify-content: space-around;
@@ -70,9 +70,26 @@ image {
 
 .header .logout Button {
     border: none;
-    color: #895129;
+    color: #4F4D46;
     background: none;
     padding: 0;
+}
+
+.header .notification {
+    position: relative;
+    display: inline-block;
+}
+
+
+.header .notification .notification-count {
+    position: absolute;
+    top: -6px;
+    right: 5px;
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 8px;
 }
 
 
@@ -382,14 +399,15 @@ image {
     align-items: center;
 }
 
-.about .contentimage .detailimage {
+.about .contentimage .profile {
     margin-right: 35px;
 }
 
 .about .contentimage img {
-    width: 600px;
-    height: auto;
+    width: 520px;
+    height: 320px;
     border-radius: 41px;
+    object-fit: cover;
 }
 
 .about .contentimage .content {
@@ -431,13 +449,13 @@ image {
     margin: 0 auto;
 }
 
-.createblogs .bgimg #bgimg{
+.createblogs .bgimg #bgimg {
     width: 100%;
     object-fit: contain;
     position: absolute;
     top: -500px;
     left: 0;
-    z-index: -1; 
+    z-index: -1;
 }
 
 .createblogs .detailheader h1 {
@@ -485,14 +503,14 @@ image {
 
 }
 
-.createblogs .formsubmit .submitbutton{
+.createblogs .formsubmit .submitbutton {
     display: flex;
     justify-content: space-between;
     text-align: center;
     align-items: center;
 }
 
-.createblogs .formsubmit .submitbutton .space{
+.createblogs .formsubmit .submitbutton .space {
     border: none;
     background: none;
 }
@@ -522,12 +540,12 @@ image {
     color: white;
 }
 
-.createblogs .formsubmit #reset{
+.createblogs .formsubmit #reset {
     background: none;
     border: none;
 }
 
-.createblogs .formsubmit #reset img{
+.createblogs .formsubmit #reset img {
     width: 50px;
 }
 

@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from .models import User, Blog, Comment, Like
+from .models import User, Blog, Comment, Like, Notification
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -40,3 +40,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def get_user_first_name(self, obj):
         return obj.user.first_name
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'

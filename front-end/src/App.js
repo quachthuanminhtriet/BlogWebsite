@@ -11,6 +11,7 @@ import About from './component/Home/About';
 import CreateBlog from './component/Blog/CreateBlog';
 import DetailBlog from './component/Blog/DetailBlog';
 import AllBlog from './component/Home/AllBlog';
+import Notification from './component/User/Notification';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/createpost" element={<CreateBlog />} />
           <Route path="/blogs/:slug" element={<DetailBlog />} />
           <Route path="/blog" element={<AllBlog />} />
+          <Route path="/notification" element={<Notification />} />
         </Routes>
       </Container>
       <Routes>

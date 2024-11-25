@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="856044a5-af8b-4098-90c6-564a25452cc8" name="Changes" comment="" />
+    <list default="true" id="856044a5-af8b-4098-90c6-564a25452cc8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../front-end/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Blog/DetailBlog.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Blog/DetailBlog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Configs/APIs.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Configs/APIs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Home/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Home/About.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Home/AllBlog.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Home/AllBlog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Layout/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Layout/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/Styles/MyStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/Styles/MyStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/User/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/User/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/component/User/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/component/User/Register.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +47,12 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\CNMNM\BlogWebsite\backend\blogweb\blog" />
+      <recent name="F:\CNMNM\BlogWebsite\backend\blogweb\blogweb" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="backend" />

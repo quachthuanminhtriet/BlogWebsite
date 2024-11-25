@@ -1,11 +1,14 @@
+import time
 from django.contrib.auth.hashers import make_password
-from django.db.models import Exists, OuterRef, Value, BooleanField
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from django.http import StreamingHttpResponse, HttpResponse
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, generics, permissions
-from . import serializers, models
-from .models import User, Blog, Comment, Like
+from . import serializers
+from .models import User, Blog, Comment, Like, Notification
 from .page import BlogPagination
 
 
@@ -15,7 +18,9 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIVi
     serializer_class = serializers.UserSerializer
 
     def get_permissions(self):
-        if self.action in ['get_current_user', 'change_password']:
+        if self.action in ['get_current_user', 'change_password',
+                           'notifications', 'unread-notifications',
+                           'mark-all-notifications-read']:
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
 
@@ -54,6 +59,37 @@ class UserViewSet(viewsets.ViewSet, generics.CreateAPIView, generics.UpdateAPIVi
             user = serializer.save(password=make_password(serializer.validated_data['password']))
             return Response(serializers.UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    #Đưa ra danh sách thông báo
+    @action(detail=False, methods=['get'], url_path='notifications', permission_classes=[permissions.IsAuthenticated])
+    def get_notifications(self, request):
+        user = request.user
+        notifications = user.notifications.all().order_by('-create_date')  # Lấy thông báo của người dùng
+        page = self.paginate_queryset(notifications)
+        if page is not None:
+            serializer = serializers.NotificationSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = serializers.NotificationSerializer(notifications, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'], url_path='unread-notifications',
+            permission_classes=[permissions.IsAuthenticated])
+    def get_unread_notifications_count(self, request):
+        user = request.user
+        unread_notifications = Notification.objects.filter(user=user, is_read=False)
+        return Response({'unread_count': unread_notifications.count()})
+
+    # Đánh Dấu những thông báo đã đọc
+    @action(detail=False, methods=['patch'], url_path='mark-all-notifications-read',
+            permission_classes=[permissions.IsAuthenticated])
+    def mark_all_notifications_read(self, request):
+        user = request.user
+
+        # Cập nhật tất cả thông báo chưa đọc của người dùng thành "đã đọc"
+        unread_notifications = Notification.objects.filter(user=user, is_read=False)
+        unread_notifications.update(is_read=True)
+
+        return Response({"message": "All notifications marked as read"}, status=status.HTTP_200_OK)
 
 
 # Blog ViewSet
@@ -108,7 +144,16 @@ class BlogViewSet(viewsets.ViewSet, generics.ListAPIView, generics.CreateAPIView
             blog.likes += 1
             blog.liked = True
             blog.save()
-            return Response({'message': 'Liked', 'likes_count': blog.likes, 'liked': True, }, status=status.HTTP_200_OK)
+
+            # if user.role != 'blogger':
+            Notification.objects.create(
+                user=blog.author,  # Chủ bài viết
+                message=f"{user.username} đã thích bài viết của bạn: '{blog.title}'",
+                notification_type="like"
+            )
+
+            return Response({'message': 'Liked', 'likes_count': blog.likes, 'liked': True},
+                            status=status.HTTP_201_CREATED)
 
 
 # Comment ViewSet
@@ -116,6 +161,21 @@ class CommentViewSet(viewsets.ViewSet, generics.ListAPIView, generics.CreateAPIV
     queryset = Comment.objects.filter(active=True)
     serializer_class = serializers.CommentSerializer
     permission_classes = [permissions.AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        comment = serializer.save(user=request.user)
+
+        # Gửi thông báo cho tác giả bài viết
+        # if user.role != 'blogger':
+        Notification.objects.create(
+            user=comment.blog.author,  # Chủ bài viết
+            message=f"{request.user.username} đã bình luận trên bài viết của bạn: '{comment.blog.title}'",
+            notification_type="comment"
+        )
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
         queryset = self.queryset
@@ -125,4 +185,31 @@ class CommentViewSet(viewsets.ViewSet, generics.ListAPIView, generics.CreateAPIV
                 queryset = queryset.filter(blog__slug=blog_slug)
         return queryset
 
+
+#Chạy realtime
+def event_stream(user):
+    while True:
+        notifications = Notification.objects.filter(user=user, is_read=False)
+        if notifications.exists():
+            for notification in notifications:
+                yield f'data: {notification.message}\n\n'
+                notification.is_read = True
+                notification.save()
+        time.sleep(1)
+
+def sse_notifications_view(request):
+    token_key = request.GET.get('token')
+    if not token_key:
+        return HttpResponse(status=401)
+
+    jwt_authenticator = JWTAuthentication()
+    try:
+        validated_token = jwt_authenticator.get_validated_token(token_key)
+        user = jwt_authenticator.get_user(validated_token)
+    except (InvalidToken, TokenError) as e:
+        return HttpResponse(status=401)
+
+    response = StreamingHttpResponse(event_stream(user), content_type='text/event-stream')
+    response['Cache-Control'] = 'no-cache'
+    return response
 

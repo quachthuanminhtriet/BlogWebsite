@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import APIs, { authAPIs, endpoints } from '../Configs/APIs';
 import { Button } from 'react-bootstrap';
 import { formatDistanceToNow } from 'date-fns';
+import cookie from "react-cookies"  
 
 const DetailBlog = () => {
   const { slug } = useParams();
+  const navigate = useNavigate(); 
   const [blog, setBlog] = useState(null);
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');  // New state for the comment input
+  const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [blogId, setBlogId] = useState(null);
@@ -30,7 +32,6 @@ const DetailBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       setLoading(true);
-      console.log(user);
       try {
         const res = await APIs.get(`${endpoints['blogs']}${slug}/increment-views/`);
         setBlog(res.data);
@@ -64,15 +65,17 @@ const DetailBlog = () => {
     setNewComment(e.target.value);
   };
 
-
   const handleCommentSubmit = async () => {
-    //check login
+    // Kiểm tra nếu người dùng chưa đăng nhập
     if (!user) {
+
       alert("You must be logged in to comment.");
+      navigate('/login', { state: { from: window.location.pathname } });
       return;
     }
 
     if (!newComment.trim()) return;
+
     const scrollPosition = window.scrollY;
     setLoading(true);
 
@@ -81,6 +84,10 @@ const DetailBlog = () => {
         user: user.id,
         content: newComment,
         blog: blogId,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${cookie.load('access-token')}`
+        }
       });
       setComments([res.data, ...comments]);
       setNewComment('');
@@ -99,11 +106,10 @@ const DetailBlog = () => {
   if (!blog) {
     return <div>Blog not found.</div>;
   }
-  
+
   const handleCancel = () => {
     setNewComment('');
   };
-  
 
   // Sanitize and display content
   const sanitizedContent = DOMPurify.sanitize(blog.content);
